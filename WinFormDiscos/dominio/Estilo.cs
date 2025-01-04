@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WinFormDiscos
 {
-    internal class Estilo
+    public class Estilo
     {
         public string Descripcion {  get; set; }
         public override string ToString()

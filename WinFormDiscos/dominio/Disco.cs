@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WinFormDiscos
 {
-    internal class Disco
+    public class Disco
     {
         public Disco(string titulo, DateTime fechaLanzamiento, int cantidadCanciones, string descripcionEstilo, string descripcionEdicion) 
         {

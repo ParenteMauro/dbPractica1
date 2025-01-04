@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+
 namespace WinFormDiscos
 {
-    internal class DiscosNegocios
+    public class DiscosNegocios
     {
         public List<Disco> listar() {
 
