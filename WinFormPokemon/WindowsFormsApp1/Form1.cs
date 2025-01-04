@@ -7,6 +7,8 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using dominio;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1

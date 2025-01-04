@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using dominio;
 namespace WindowsFormsApp1
 {
-    internal class PokemonNegocio
+    public class PokemonNegocio
     {
         public List<Pokemon> listar()
         {
