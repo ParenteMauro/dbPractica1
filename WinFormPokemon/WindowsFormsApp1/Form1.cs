@@ -7,7 +7,7 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using negocio;
 using dominio;
 using System.Windows.Forms;
 
@@ -16,68 +16,21 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
         private List<Pokemon> listaPokemon = new List<Pokemon>();
+        private List<Elemento> listaElemento = new List<Elemento>();
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-            try
-            {
-                int resultado;
-                resultado = calcular();
-                label1.Text = "Resultado: " + resultado.ToString();
-            }
-            catch(FormatException ex)
-            {
-                MessageBox.Show("Cargar bien los datos");
-                
-            }
-            catch(DivideByZeroException ex)
-            {
-                MessageBox.Show("No se puede dividir por 0");
-            }
-            catch(Exception ex) {
-                MessageBox.Show("Error generico");
-            }
-            finally 
-            {
-
-            }
-            
-           
-
-            }
-        private int calcular()
-        {
-            try {
-                int a, b, r;
-                a = int.Parse(textBox1.Text);
-                b = int.Parse(textBox2.Text);
-                r = a + b;
-                return r;
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-            
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+ 
         private void Form1_Load(object sender, EventArgs e)
         {
             PokemonNegocio negocio = new PokemonNegocio();
-            listaPokemon = negocio.listar();
-            dgvPokemons.DataSource = listaPokemon;
-            dgvPokemons.Columns["UrlImagen"].Visible = false;
-            cargarImagen(listaPokemon[0].UrlImagen);
+            cargar();
+
+            ElementoNegocio negocioElemen = new ElementoNegocio();
+            listaElemento = negocioElemen.listar();
+
 
         }
 
@@ -97,6 +50,38 @@ namespace WindowsFormsApp1
             catch (Exception ex)
             {
                 pbxPokemon.Load("https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png");
+            }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            frmAltaPokemoncs alta = new frmAltaPokemoncs();
+            alta.ShowDialog();
+            
+            cargar();
+            
+        }
+
+        private void btnBorrar_Click(object sender, EventArgs e)
+        {
+            frmBorrarPokemon borrar = new frmBorrarPokemon();
+            borrar.ShowDialog();
+            cargar();
+        }
+
+        private void cargar()
+        {
+            PokemonNegocio negocio = new PokemonNegocio();
+            try
+            {
+                listaPokemon = negocio.listar();
+                dgvPokemons.DataSource = listaPokemon;
+                dgvPokemons.Columns["UrlImagen"].Visible = false;
+                cargarImagen(listaPokemon[0].UrlImagen);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }
