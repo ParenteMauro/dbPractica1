@@ -14,11 +14,19 @@ namespace WindowsFormsApp1
 {
     public partial class frmAltaPokemoncs : Form
     {
+        private Pokemon pokemon = null;
         public frmAltaPokemoncs()
         {
             InitializeComponent();
         }
 
+        public frmAltaPokemoncs(Pokemon pokemon)
+        {
+            this.pokemon = pokemon;
+
+            InitializeComponent();
+            Text = "Modificar Pokemon";
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -26,19 +34,36 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Pokemon poke = new Pokemon();
+            
             try
             {
-                poke.Numero = int.Parse(txtNumero.Text);   
-                poke.Nombre = txtNombre.Text;
-                poke.Descripcion = txtDescripcion.Text;
-                poke.Tipo = (Elemento)cbxTipo.SelectedItem;
-                poke.Debilidad = (Elemento)cbxDebilidad.SelectedItem;
-                poke.UrlImagen = txtImagen.Text;
+                if(pokemon== null)
+                {
+                    pokemon = new Pokemon();
+                }
+
+                pokemon.Numero = int.Parse(txtNumero.Text);   
+                pokemon.Nombre = txtNombre.Text;
+                pokemon.Descripcion = txtDescripcion.Text;
+                pokemon.Tipo = (Elemento)cbxTipo.SelectedItem;
+                pokemon.Debilidad = (Elemento)cbxDebilidad.SelectedItem;
+                pokemon.UrlImagen = txtImagen.Text;
             
                 PokemonNegocio pokemonNegocio = new PokemonNegocio();
-                pokemonNegocio.agregar(poke);
-                MessageBox.Show("Pokemon Agregado" );
+                if (pokemon.Id != 0)
+                {
+                    pokemonNegocio.modificar(pokemon);
+                    MessageBox.Show("Pokemon Modificado");
+                  
+                }
+                else
+                {
+                    pokemonNegocio.agregar(pokemon);
+                    MessageBox.Show("Pokemon Agregado");
+
+                }
+
+
                 this.Close();
 
             }
@@ -54,7 +79,22 @@ namespace WindowsFormsApp1
             {
                 ElementoNegocio elementoNegocio = new ElementoNegocio();
                 cbxTipo.DataSource = elementoNegocio.listar();
+                cbxTipo.ValueMember = "Id";
+                cbxTipo.DisplayMember = "Descripcion";
                 cbxDebilidad.DataSource = elementoNegocio.listar();
+                cbxDebilidad.ValueMember = "Id";
+                cbxDebilidad.DisplayMember = "Descripcion";
+
+                if(pokemon != null)
+                {
+                    txtNumero.Text = pokemon.Numero.ToString();
+                    txtNombre.Text = pokemon.Nombre;
+                    txtDescripcion.Text = pokemon.Descripcion;
+                    txtImagen.Text = pokemon.UrlImagen.ToString();
+                    cargarImagen(pokemon.UrlImagen);
+                    cbxTipo.SelectedValue = pokemon.Tipo.Id;
+                    cbxDebilidad.SelectedValue = pokemon.Debilidad.Id;
+                }
 
             }
             catch (Exception ex) 

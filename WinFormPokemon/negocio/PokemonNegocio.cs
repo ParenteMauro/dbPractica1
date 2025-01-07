@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database= POKEDEX_DB; integrated security=true; ";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "SELECT P.Numero, P.Nombre, P.Descripcion, P.UrlImagen, E.Descripcion AS Tipo, D.Descripcion AS Debilidad FROM POKEMONS P, ELEMENTOS E, ELEMENTOS D WHERE  E.Id = P.IdTipo AND D.Id = P.IdDebilidad;\r\n";
+                comando.CommandText = "SELECT P.id as idPokemon, P.Numero, P.Nombre, P.Descripcion, P.UrlImagen, E.Id AS idElemento ,E.Descripcion AS Tipo,D.Id AS idDebilidad, D.Descripcion AS Debilidad FROM POKEMONS P, ELEMENTOS E, ELEMENTOS D WHERE  E.Id = P.IdTipo AND D.Id = P.IdDebilidad AND P.Activo = 1;";
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -31,6 +31,7 @@ namespace WindowsFormsApp1
                 while (lector.Read())
                 {
                     Pokemon aux = new Pokemon();
+                    aux.Id = (int)lector["idPokemon"];
                     aux.Numero = (int)lector["Numero"];
                     aux.Nombre = (string)lector["Nombre"];
                     aux.Descripcion = (string)lector["Descripcion"];
@@ -39,7 +40,9 @@ namespace WindowsFormsApp1
                         aux.UrlImagen = (string)lector["UrlImagen"];
                     }
                     aux.Tipo = new Elemento();
+                    aux.Tipo.Id = (int)lector["idElemento"];
                     aux.Debilidad = new Elemento();
+                    aux.Debilidad.Id = (int)lector["idDebilidad"];
                     aux.Tipo.Descripcion = (string)lector["Tipo"];
                     aux.Debilidad.Descripcion = (string)lector["Debilidad"];
                     lista.Add(aux);
@@ -90,12 +93,12 @@ namespace WindowsFormsApp1
                 actualizar.cerrarConexion();
             }
         }
-        public void quitar(string nombre)
+        public void quitar(int id)
         {
             AccesoDatos conexion = new AccesoDatos();
             try
             {
-                conexion.setearConsulta("DELETE FROM POKEMONS WHERE Nombre = '" + nombre + "';");
+                conexion.setearConsulta("DELETE FROM POKEMONS WHERE Id= " + id + ";");
                 conexion.ejecutarAccion();
             }
             catch(Exception ex) { throw ex; }
@@ -105,8 +108,44 @@ namespace WindowsFormsApp1
             }
         }
 
+        public void eliminarLogico(int id)
+        {
+            AccesoDatos conexion = new AccesoDatos();
+            try
+            {
+                conexion.setearConsulta("UPDATE POKEMONS SET Activo = 0 WHERE Id=" + id);
+                conexion.ejecutarAccion();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+        }
         public void modificar(Pokemon modificar)
         {
+            AccesoDatos conexion = new AccesoDatos();
+            try
+            {
+                conexion.setearConsulta("UPDATE POKEMONS SET Nombre = @nombre, Numero = @num, Descripcion = @Descripcion, UrlImagen = @img, IdTipo = @IdTipo , IdDebilidad = @IdDebilidad WHERE Id= @idPokemon");
+                conexion.setearParametro("@idPokemon", modificar.Id);
+                conexion.setearParametro("@nombre", modificar.Nombre);
+                conexion.setearParametro("@num", modificar.Numero);
+                conexion.setearParametro("@Descripcion", modificar.Descripcion);
+                conexion.setearParametro("@img", modificar.UrlImagen);
+                conexion.setearParametro("@IdTipo", modificar.Tipo.Id);
+                conexion.setearParametro("@IdDebilidad", modificar.Debilidad.Id);
+                conexion.ejecutarLectura();
+
+            }
+            catch (Exception ex) { throw ex; }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
 
         }
     }
