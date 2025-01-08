@@ -1,4 +1,5 @@
-﻿using System;
+﻿using negocio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -47,6 +48,12 @@ namespace WinFormDiscos
             {
                 pbxDisco.Load("https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png");
             }
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            FrmAlta frmAlta = new FrmAlta();    
+            frmAlta.ShowDialog();
         }
     }
 }

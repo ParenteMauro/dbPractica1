@@ -8,6 +8,7 @@ namespace WinFormDiscos
 {
     public class Estilo
     {
+        public int Id { get; set; }
         public string Descripcion {  get; set; }
         public override string ToString()
         {

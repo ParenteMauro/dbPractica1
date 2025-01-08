@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using negocio;
 
 namespace WinFormDiscos
 {
@@ -40,7 +41,21 @@ namespace WinFormDiscos
             {
                 throw ex;
             }
+
+
         }
+
+        public void agregarDisco(Disco disco)
+        {
+            AccDatos accDatos = new AccDatos();
+
+            accDatos.settearQuery("INSERT INTO DISCOS (Titulo, Fechalanzamiento, CantidadCanciones, UrlImagen, IdEstilo,IdEdicion) Values('" + disco.Titulo +"'," +
+                disco.FechaLanzamiento + ", "+ disco.CantidadCanciones+", @UrlImagen, @IdEstilo, @IdEdicion )");
+            accDatos.setearParametro("@UrlImagen", disco.UrlImagen);
+            accDatos.setearParametro("@IdEstilo", disco.Estilo);
+            accDatos.setearParametro("@IdEdicion", disco.Edicion);
+        }
+
     } 
 }
 

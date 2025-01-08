@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using dominio;
 using negocio;
+using System.Collections;
+
 namespace WindowsFormsApp1
 {
     public class PokemonNegocio
@@ -147,6 +149,71 @@ namespace WindowsFormsApp1
                 conexion.cerrarConexion();
             }
 
+        }
+
+        public List<Pokemon> filtrar(string campo, string criterio, string filtro)
+        {
+            AccesoDatos conexion = new AccesoDatos();
+            List<Pokemon> listaFiltrada = new List<Pokemon>();
+            try
+            {
+                string consulta;
+                consulta = ("SELECT P.id as idPokemon, P.Numero, P.Nombre, P.Descripcion, P.UrlImagen, E.Id AS idElemento ,E.Descripcion AS Tipo,D.Id AS idDebilidad, D.Descripcion AS Debilidad FROM POKEMONS P, ELEMENTOS E, ELEMENTOS D WHERE  E.Id = P.IdTipo AND D.Id = P.IdDebilidad AND P.Activo = 1 ");
+                if (filtro != "") { 
+                switch (criterio)
+                {
+                    case "Mayor a":
+                    {
+                        consulta += "AND Numero > " + filtro;
+                        break;
+                    }
+                    case "Menor a":
+                        consulta += "AND Numero <" + filtro;
+                        break;
+                    case "Igual a":
+                        consulta += "AND Numero =" + filtro;
+                        break;
+                    case "Comienza con":
+                        consulta += "AND Nombre LIKE '" + filtro + "%'";
+                        break;
+                    case "Termina en":
+                        consulta += "AND Nombre LIKE '%" + filtro + "'";
+                        break;
+                    case "Contiene":
+                        consulta += "AND Nombre LIKE '%" + filtro + "%'";
+                        break;
+
+                }
+                }
+                conexion.setearConsulta(consulta);
+                conexion.ejecutarLectura();
+                while (conexion.Lector.Read())
+                {
+                    Pokemon aux = new Pokemon();
+                    aux.Id = (int)conexion.Lector["idPokemon"];
+                    aux.Numero = (int)conexion.Lector["Numero"];
+                    aux.Nombre = (string)conexion.Lector["Nombre"];
+                    aux.Descripcion = (string)conexion.Lector["Descripcion"];
+                    if (!(conexion.Lector["UrlImagen"] is DBNull))
+                    {
+                        aux.UrlImagen = (string)conexion.Lector["UrlImagen"];
+                    }
+                    aux.Tipo = new Elemento();
+                    aux.Tipo.Id = (int)conexion.Lector["idElemento"];
+                    aux.Debilidad = new Elemento();
+                    aux.Debilidad.Id = (int)conexion.Lector["idDebilidad"];
+                    aux.Tipo.Descripcion = (string)conexion.Lector["Tipo"];
+                    aux.Debilidad.Descripcion = (string)conexion.Lector["Debilidad"];
+                    listaFiltrada.Add(aux);
+                }
+                return listaFiltrada;
+
+            }
+            catch (Exception ex) { throw ex; }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
         }
     }
 }

@@ -20,6 +20,9 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
+            cbxCampo.Items.Add("Número");
+            cbxCampo.Items.Add("Nombre");
+            cbxCampo.Items.Add("Descripcion");
         }
 
  
@@ -130,21 +133,22 @@ namespace WindowsFormsApp1
 
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
-            List<Pokemon> listaFiltrada;
-            string filtro = txtfiltro.Text;
-            if (filtro != "") {
-
-                listaFiltrada = listaPokemon.FindAll(x => x.Nombre.ToUpper().Contains( filtro.ToUpper()) || x.Tipo.Descripcion.ToUpper().Contains(filtro.ToUpper()));
-
-            }
-            else
+            try
             {
-                listaFiltrada = listaPokemon;
+            PokemonNegocio negocio = new PokemonNegocio();
+                if (cbxCampo.SelectedItem != null && cbxCriterio.SelectedItem != null)
+                {
+                    string campo = cbxCampo.SelectedItem.ToString();
+                    string criterio = cbxCriterio.SelectedItem.ToString();
+                    string filtro = cbxFiltro.Text;
+                    dgvPokemons.DataSource = negocio.filtrar(campo, criterio, filtro);
+                }
+
             }
-            dgvPokemons.DataSource = null;
-            
-            dgvPokemons.DataSource = listaFiltrada;
-            ocultarColumnas();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 
         }
         private void ocultarColumnas()
@@ -156,8 +160,8 @@ namespace WindowsFormsApp1
 
         private void txtfiltro_KeyPress(object sender, KeyPressEventArgs e)
         {
-
             
+
         }
         private void buscar(string filtro, List<Pokemon> listaFiltrada)
         {
@@ -168,7 +172,7 @@ namespace WindowsFormsApp1
         {
             List<Pokemon> listaFiltrada;
             string filtro = txtfiltro.Text;
-            if (filtro.Length >=3)
+            if (filtro.Length >= 3)
             {
 
                 listaFiltrada = listaPokemon.FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()) || x.Tipo.Descripcion.ToUpper().Contains(filtro.ToUpper()));
@@ -182,6 +186,25 @@ namespace WindowsFormsApp1
 
             dgvPokemons.DataSource = listaFiltrada;
             ocultarColumnas();
+        }
+
+        private void cbxCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string opcion = cbxCampo.SelectedItem.ToString();
+            if(opcion == "Número")
+            {
+                cbxCriterio.Items.Clear();
+                cbxCriterio.Items.Add("Mayor a");
+                cbxCriterio.Items.Add("Menor a");
+                cbxCriterio.Items.Add("Igual a");
+            }
+            else
+            {
+                cbxCriterio.Items.Clear();
+                cbxCriterio.Items.Add("Comienza con");
+                cbxCriterio.Items.Add("Termina con");
+                cbxCriterio.Items.Add("Contiene");
+            }
         }
     }
 }

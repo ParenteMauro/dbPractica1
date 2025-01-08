@@ -38,6 +38,12 @@
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.txtfiltro = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.cbxFiltro = new System.Windows.Forms.ComboBox();
+            this.cbxCriterio = new System.Windows.Forms.ComboBox();
+            this.cbxCampo = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPokemons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPokemon)).BeginInit();
             this.SuspendLayout();
@@ -58,13 +64,13 @@
             this.dgvPokemons.MultiSelect = false;
             this.dgvPokemons.Name = "dgvPokemons";
             this.dgvPokemons.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPokemons.Size = new System.Drawing.Size(622, 298);
+            this.dgvPokemons.Size = new System.Drawing.Size(724, 298);
             this.dgvPokemons.TabIndex = 4;
             this.dgvPokemons.SelectionChanged += new System.EventHandler(this.dgvPokemons_SelectionChanged);
             // 
             // pbxPokemon
             // 
-            this.pbxPokemon.Location = new System.Drawing.Point(665, 129);
+            this.pbxPokemon.Location = new System.Drawing.Point(833, 129);
             this.pbxPokemon.Name = "pbxPokemon";
             this.pbxPokemon.Size = new System.Drawing.Size(305, 298);
             this.pbxPokemon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -113,7 +119,7 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(381, 33);
+            this.btnFiltrar.Location = new System.Drawing.Point(865, 511);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(122, 29);
             this.btnFiltrar.TabIndex = 10;
@@ -139,11 +145,71 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "Filtrar";
             // 
+            // cbxFiltro
+            // 
+            this.cbxFiltro.FormattingEnabled = true;
+            this.cbxFiltro.Location = new System.Drawing.Point(650, 514);
+            this.cbxFiltro.Name = "cbxFiltro";
+            this.cbxFiltro.Size = new System.Drawing.Size(156, 21);
+            this.cbxFiltro.TabIndex = 13;
+            // 
+            // cbxCriterio
+            // 
+            this.cbxCriterio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCriterio.FormattingEnabled = true;
+            this.cbxCriterio.Location = new System.Drawing.Point(381, 516);
+            this.cbxCriterio.Name = "cbxCriterio";
+            this.cbxCriterio.Size = new System.Drawing.Size(156, 21);
+            this.cbxCriterio.TabIndex = 14;
+            // 
+            // cbxCampo
+            // 
+            this.cbxCampo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCampo.FormattingEnabled = true;
+            this.cbxCampo.Location = new System.Drawing.Point(119, 514);
+            this.cbxCampo.Name = "cbxCampo";
+            this.cbxCampo.Size = new System.Drawing.Size(156, 21);
+            this.cbxCampo.TabIndex = 15;
+            this.cbxCampo.SelectedIndexChanged += new System.EventHandler(this.cbxCampo_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(615, 519);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Filtro";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(336, 519);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Criterio";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(61, 519);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 13);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Campo";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1023, 547);
+            this.ClientSize = new System.Drawing.Size(1176, 547);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cbxCampo);
+            this.Controls.Add(this.cbxCriterio);
+            this.Controls.Add(this.cbxFiltro);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtfiltro);
             this.Controls.Add(this.btnFiltrar);
@@ -175,6 +241,12 @@
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.TextBox txtfiltro;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbxFiltro;
+        private System.Windows.Forms.ComboBox cbxCriterio;
+        private System.Windows.Forms.ComboBox cbxCampo;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
