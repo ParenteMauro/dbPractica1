@@ -118,11 +118,25 @@ namespace WindowsFormsApp1
         }
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            Pokemon seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
+            try
+            {
+                if (dgvPokemons.CurrentRow.DataBoundItem == null)
+                {
+                    MessageBox.Show("Pokemon no seleccionado");
+                }
+                else
+                {
+                    Pokemon seleccionado = (Pokemon)dgvPokemons.CurrentRow.DataBoundItem;
 
-            frmAltaPokemoncs modificar = new frmAltaPokemoncs(seleccionado);
-            modificar.ShowDialog();
-            cargar();
+                    frmAltaPokemoncs modificar = new frmAltaPokemoncs(seleccionado);
+                    modificar.ShowDialog();
+                    cargar();
+                }
+            }
+            catch(NullReferenceException ex)
+            {
+                throw ex;
+            }
             
         }
 

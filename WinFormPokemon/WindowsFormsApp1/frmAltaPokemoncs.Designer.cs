@@ -43,6 +43,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtImagen = new System.Windows.Forms.TextBox();
             this.pbxPokemon = new System.Windows.Forms.PictureBox();
+            this.btnAgregarImagen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPokemon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,6 +80,8 @@
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(121, 20);
             this.txtNumero.TabIndex = 0;
+            this.txtNumero.Text = "\r\n";
+            this.txtNumero.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumero_KeyPress);
             // 
             // txtNombre
             // 
@@ -169,18 +172,29 @@
             // 
             // pbxPokemon
             // 
-            this.pbxPokemon.Location = new System.Drawing.Point(256, 21);
+            this.pbxPokemon.Location = new System.Drawing.Point(378, 12);
             this.pbxPokemon.Name = "pbxPokemon";
             this.pbxPokemon.Size = new System.Drawing.Size(295, 265);
             this.pbxPokemon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbxPokemon.TabIndex = 14;
             this.pbxPokemon.TabStop = false;
             // 
+            // btnAgregarImagen
+            // 
+            this.btnAgregarImagen.Location = new System.Drawing.Point(246, 237);
+            this.btnAgregarImagen.Name = "btnAgregarImagen";
+            this.btnAgregarImagen.Size = new System.Drawing.Size(75, 23);
+            this.btnAgregarImagen.TabIndex = 15;
+            this.btnAgregarImagen.Text = "Agregar Local";
+            this.btnAgregarImagen.UseVisualStyleBackColor = true;
+            this.btnAgregarImagen.Click += new System.EventHandler(this.btnAgregarImagen_Click);
+            // 
             // frmAltaPokemoncs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 365);
+            this.ClientSize = new System.Drawing.Size(740, 365);
+            this.Controls.Add(this.btnAgregarImagen);
             this.Controls.Add(this.pbxPokemon);
             this.Controls.Add(this.txtImagen);
             this.Controls.Add(this.label6);
@@ -222,5 +236,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtImagen;
         private System.Windows.Forms.PictureBox pbxPokemon;
+        private System.Windows.Forms.Button btnAgregarImagen;
     }
 }
